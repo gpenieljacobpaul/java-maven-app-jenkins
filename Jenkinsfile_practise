@@ -22,7 +22,7 @@ pipeline {
                 echo "Current branch: ${env.BRANCH_NAME}"
                 script {
                     echo "Environment variables:"
-                    sh 'env'
+                    sh 'env | sort'
                 }
             }
         }
@@ -33,12 +33,18 @@ pipeline {
             }
             steps {
                 echo 'Deploying the application...'
-                withCredentials([usernamePassword(
-                    credentialsId : 'github', 
-                    usernameVariable: 'USER', 
-                    passwordVariable: 'PWD')]) {
-                        sh "some script ${USER} AND ${PWD}"
-                    }
+                withCredentials([
+                    usernamePassword(
+                        credentialsId: 'server-credentials',
+                        usernameVariable: 'USER',
+                        passwordVariable: 'PWD'
+                    )
+                ]) {
+                    // Example safe usage
+                    sh '''
+                        echo "Deploying as user: $USER"
+                    '''
+                }
             }
         }
     }
