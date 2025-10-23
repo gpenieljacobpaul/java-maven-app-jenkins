@@ -2,33 +2,28 @@ pipeline {
     agent any 
     
     stages {
-        stage("build") {
+        stage('Build') {
             steps {
-                echo 'building the application'
-
-            }
-        }
-        stage("test") {
-            when {
-                expression {
-                    BRANCH_NAME == 'dev'
-                }
-            }
-            steps {
-                echo 'testing the application'
-            }
-        }
-        stage("deploy") {
-            when {
-                expression {
-                    BRANCH_NAME == 'dev' || BRANCH_NAME == 'master'
-                }
-            }
-            steps {
-                echo 'delpoying the application'
+                echo 'Building the application...'
             }
         }
 
+        stage('Test') {
+            when {
+                expression { env.BRANCH_NAME == 'dev' }
+            }
+            steps {
+                echo 'Testing the application...'
+            }
+        }
+
+        stage('Deploy') {
+            when {
+                expression { env.BRANCH_NAME == 'dev' || env.BRANCH_NAME == 'master' }
+            }
+            steps {
+                echo 'Deploying the application...'
+            }
+        }
     }
-
 }
