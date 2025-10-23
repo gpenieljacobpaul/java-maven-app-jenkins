@@ -29,7 +29,7 @@ pipeline {
 
         stage('Deploy') {
             when {
-                expression { env.BRANCH_NAME == 'dev' || env.BRANCH_NAME == 'master' }
+                expression { env.BRANCH_NAME == 'dev' || env.BRANCH_NAME == 'null' }
             }
             steps {
                 echo 'Deploying the application...'
