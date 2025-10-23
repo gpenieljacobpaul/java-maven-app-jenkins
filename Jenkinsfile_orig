@@ -63,9 +63,10 @@ pipeline {
             //     }
             steps {
                 script {
-                    env.ENV = input message: "select the enviornment to deploy to", ok: "Done", paramters: [choice(name: 'ONE', choices: ['dev', 'staging', 'prod'], description: '')]
-                    echo "deploying version ${ENV_1}"
-                    echo "deploying version ${ENV_2}"
+                    env.ENV = input message: "select the enviornment to deploy to", ok: "Done", parameters: [choice(name: 'ONE', choices: ['dev', 'staging', 'prod'], description: '')]
+                    // echo "deploying version ${ENV_1}"
+                    // echo "deploying version ${ENV_2}"
+                    echo "deploying version ${ENV}"
                 }
                 withCredentials([
                     usernamePassword(
