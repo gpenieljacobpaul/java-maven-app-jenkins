@@ -61,7 +61,6 @@ pipeline {
             //         choice(name: 'ENV_1', choices: ['dev', 'stage', 'prod'], description: '')
             //         choice(name: 'ENV_2', choices: ['dev', 'stage', 'prod'], description: '')
             //     }
-            }
             steps {
                 script {
                     env.ENV = input message: "select the enviornment to deploy to", ok: "Done", paramters: [choice(name: 'ONE', choices: ['dev', 'staging', 'prod'], description: '')]
@@ -83,3 +82,4 @@ pipeline {
             }
         }
     }
+}
