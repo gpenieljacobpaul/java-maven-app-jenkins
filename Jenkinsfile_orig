@@ -64,7 +64,8 @@ pipeline {
             }
             steps {
                 echo 'Deploying the application...'
-                echo "deploying version ${VERSION}"
+                echo "deploying version ${ENV_1}"
+                echo "deploying version ${ENV_2}"
                 withCredentials([
                     usernamePassword(
                         credentialsId: 'github',
