@@ -1,1 +1,51 @@
+pipeline {
+    agent any 
+    environment {
+        NEW_VERSION = '1.3.0'
+    }
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building the application...'
+                echo "Building version ${NEW_VERSION}"
+            }
+        }
 
+        stage('Test') {
+            steps {
+                echo 'Testing the application...'
+            }
+        }
+
+        stage('Test_branch') {
+            steps {
+                echo "Current branch: ${env.BRANCH_NAME}"
+                script {
+                    echo "Environment variables:"
+                    sh 'env | sort'
+                }
+            }
+        }
+
+        stage('Deploy') {
+            when {
+                expression { env.BRANCH_NAME == null }
+            }
+            steps {
+                echo 'Deploying the application...'
+                withCredentials([
+                    usernamePassword(
+                        credentialsId: 'github',
+                        usernameVariable: 'USER',
+                        passwordVariable: 'PWD'
+                    )
+                ]) {
+                    // Example safe usage
+                    sh '''
+                        echo "Deploying as user: $USER"
+                    '''
+                }
+            }
+        }
+    }
+}
