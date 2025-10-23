@@ -16,7 +16,16 @@ pipeline {
                 echo 'Testing the application...'
             }
         }
-
+       stage('test123') {
+            echo "Current branch: ${env.BRANCH_NAME}"
+            echo "Environment variables: ${env}"
+            when {
+                expression {
+                    def branch = env.BRANCH_NAME
+                    return branch == 'dev' || branch == 'master'
+                }   
+           }
+       }
         stage('Deploy') {
             when {
                 expression { env.BRANCH_NAME == 'dev' || env.BRANCH_NAME == 'master' }
