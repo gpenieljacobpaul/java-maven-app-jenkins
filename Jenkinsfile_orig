@@ -9,11 +9,21 @@ pipeline {
             }
         }
         stage("test") {
+            when {
+                expression {
+                    BRANCH_NAME == 'dev'
+                }
+            }
             steps {
                 echo 'testing the application'
             }
         }
         stage("deploy") {
+            when {
+                expression {
+                    BRANCH_NAME == 'dev' || BRANCH_NAME == 'master'
+                }
+            }
             steps {
                 echo 'delpoying the application'
             }
