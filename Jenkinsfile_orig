@@ -35,7 +35,7 @@ pipeline {
             }
             steps {
                 script {
-                    gv_scipt.test_app()
+                    gv_script.test_app()
                 }
             }
         }
