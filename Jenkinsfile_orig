@@ -54,9 +54,16 @@ pipeline {
             when {
                 expression { env.BRANCH_NAME == null }
             }
+            input {
+                message "select the enviornment to deploy to"
+                ok "Done"
+                parameters {
+                    choice(name: 'VERSION', choices: ['1.1.0', '1.2.0', '1.3.0'], description: '')
+                }
+            }
             steps {
                 echo 'Deploying the application...'
-                echo "deploying version ${params.VERSION}"
+                echo "deploying version ${VERSION}"
                 withCredentials([
                     usernamePassword(
                         credentialsId: 'github',
