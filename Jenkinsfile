@@ -33,7 +33,7 @@ pipeline {
             }
             steps {
                 script {
-                    buildImage()
+                    buildImage( 'gpenieljacobpaul/docker-java-maven-app:2.0')
                 }
             }
         }
