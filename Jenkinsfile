@@ -24,6 +24,7 @@ pipeline {
             steps {
                 script {
                     gv.buildJar()
+                    echo "ADDING WEBHOOKS"
                 }
             }
         }
