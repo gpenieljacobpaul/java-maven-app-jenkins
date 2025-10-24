@@ -16,7 +16,7 @@ pipeline {
         stage("build jar") {
             when {
                 expression {
-                    BRANCH_NAME == 'master'
+                    BRANCH_NAME == 'master' || BRANCH_NAME == 'jenkins-shared-lib'
                 }
             }
             steps {
@@ -28,7 +28,7 @@ pipeline {
         stage ("build image") {
             when {
                 expression {
-                    BRANCH_NAME == 'master'
+                    BRANCH_NAME == 'master' || BRANCH_NAME == 'jenkins-shared-lib'
                 }
             }
             steps {
