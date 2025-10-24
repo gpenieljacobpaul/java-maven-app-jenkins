@@ -35,7 +35,6 @@ pipeline {
                 script {
                     buildImage()
                 }
-
             }
         }
         stage("deploy Image") {
