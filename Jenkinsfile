@@ -37,7 +37,7 @@ pipeline {
             }
             steps {
                 script {
-                    buildImage 'gpenieljacobpaul/docker-java-maven-app:3.0'
+                    buildImage 'gpenieljacobpaul/docker-java-maven-app:1.0'
                     loginDocker()
 
                 }
@@ -46,7 +46,7 @@ pipeline {
         stage ("push image") {
             steps {
                 script {
-                    pushImage 'gpenieljacobpaul/docker-java-maven-app:3.0'
+                    pushImage 'gpenieljacobpaul/docker-java-maven-app:1.0'
                 }
             }
         }
