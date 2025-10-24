@@ -12,4 +12,8 @@ def buildImage() {
         }
     }
 
+def delpoyImage() {
+        echo "deploying the application..."
+} 
+
 return this
