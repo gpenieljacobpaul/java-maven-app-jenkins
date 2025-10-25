@@ -42,24 +42,10 @@ pipeline {
 
             }
         }
-        stage('Test Git Push') {
-                steps {
-                    script {
-                        withCredentials([
-                        usernamePassword(credentialsId: 'gitpush', usernameVariable: 'U', passwordVariable: 'P')
-                        ]) {
-                            sh '''
-                            echo "User: $U"
-                            git clone https://$U:$P@github.com/gpenieljacobpaul/java-maven-app-jenkins.git test-repo
-                            '''
-                        }
-                }
-            }
-        }
         stage ("Push pom.xml to gitbub repo") {
             steps {
                 script {
-                    withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'GIT_PASS', usernameVariable: 'GIT_USER')]) {
+                    withCredentials([usernamePassword(credentialsId: 'gitpush', passwordVariable: 'GIT_PASS', usernameVariable: 'GIT_USER')]) {
                         sh 'git config user.email "jenkins@gmail.com"'
                         sh 'git config user.name "jenkins"'
                         sh 'git status'
