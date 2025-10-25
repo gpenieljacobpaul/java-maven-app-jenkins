@@ -19,7 +19,7 @@ pipeline {
             steps {
                 script {
 
-                    echo 'Increment app version yo!'
+                    echo 'Increment app version '
                     sh '''
                     mvn build-helper:parse-version versions:set \
                     -DnewVersion=${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.nextIncrementalVersion} \
