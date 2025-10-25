@@ -42,6 +42,22 @@ pipeline {
 
             }
         }
+        stages {
+            stage('Test Git Push') {
+                steps {
+                    script {
+                        withCredentials([
+                        usernamePassword(credentialsId: 'github', usernameVariable: 'U', passwordVariable: 'P')
+                        ]) {
+                            sh '''
+                            echo "User: $U"
+                            git clone https://$U:$P@github.com/gpenieljacobpaul/java-maven-app-jenkins.git test-repo
+                            '''
+                        }
+                }
+            }
+        }
+        }
         stage ("Push pom.xml to gitbub repo") {
             steps {
                 script {
