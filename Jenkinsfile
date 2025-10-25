@@ -27,11 +27,6 @@ pipeline {
             }   
         }
         stage("build jar") {
-            when {
-                expression {
-                    BRANCH_NAME == 'master'
-                }
-            }
             steps {
                 script {
                     gv.buildJar()
@@ -40,16 +35,28 @@ pipeline {
             }
         }
         stage ("build image") {
-            when {
-                expression {
-                    BRANCH_NAME == 'master'
-                }
-            }
             steps {
                 script {
                     gv.buildImage()
                 }
 
+            }
+        }
+        stage ("Push pom.xml to gitbub repo") {
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                        sh 'git config user.email "jenkins@gmail.com'
+                        sh 'get config user.name "jenkins"'
+                        sh 'git status'
+                        sh 'git branch'
+                        sh 'git config --list'
+                        sh "git remote set-url origin https://${USER}:${PASS}@github.com/gpenieljacobpaul/java-maven-app-jenkins.git"
+                        sh 'git add .'
+                        sh 'git commit -m "cli: version bump"'
+                        sh 'git push origin HEAD:feature'
+                    }
+                }
             }
         }
         stage("deploy") {
