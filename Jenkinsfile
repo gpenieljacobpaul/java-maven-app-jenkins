@@ -42,8 +42,7 @@ pipeline {
 
             }
         }
-        stages {
-            stage('Test Git Push') {
+        stage('Test Git Push') {
                 steps {
                     script {
                         withCredentials([
@@ -56,7 +55,6 @@ pipeline {
                         }
                 }
             }
-        }
         }
         stage ("Push pom.xml to gitbub repo") {
             steps {
