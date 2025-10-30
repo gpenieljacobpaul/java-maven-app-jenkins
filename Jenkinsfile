@@ -41,31 +41,31 @@ pipeline {
 
             }
         }
-        stage ("Push pom.xml to gitbub repo") {
-            steps {
-                script {
-                    withCredentials([usernamePassword(credentialsId: 'gitpush', passwordVariable: 'GIT_PASS', usernameVariable: 'GIT_USER')]) {
-                        sh 'git config user.email "jenkins@gmail.com"'
-                        sh 'git config user.name "jenkins"'
-                        sh 'git status'
-                        sh 'git branch'
-                        sh 'git config --list'
-                        sh "git remote set-url origin https://${GIT_USER}:${GIT_PASS}@github.com/gpenieljacobpaul/java-maven-app-jenkins.git"
-                        sh 'git add .'
-                        sh 'git commit -m "cli: version bump webooks [ci skip]"'
-                        sh 'git push origin HEAD:feature'
-                    }
-                }
-            }
-        }
+        // stage ("Push pom.xml to gitbub repo") {
+        //     steps {
+        //         script {
+        //             withCredentials([usernamePassword(credentialsId: 'gitpush', passwordVariable: 'GIT_PASS', usernameVariable: 'GIT_USER')]) {
+        //                 sh 'git config user.email "jenkins@gmail.com"'
+        //                 sh 'git config user.name "jenkins"'
+        //                 sh 'git status'
+        //                 sh 'git branch'
+        //                 sh 'git config --list'
+        //                 sh "git remote set-url origin https://${GIT_USER}:${GIT_PASS}@github.com/gpenieljacobpaul/java-maven-app-jenkins.git"
+        //                 sh 'git add .'
+        //                 sh 'git commit -m "cli: version bump webooks [ci skip]"'
+        //                 sh 'git push origin HEAD:feature'
+        //             }
+        //         }
+        //     }
+        // }
         stage("deploy") {
             steps {
                 script {
                     echo "deploying"
-                    def dockerCmd = "docker run -p 8082:8082 gpenieljacobpaul/docker-java-maven-app:$IMAGE_NAME"
+                    def dockerCmd = "docker run -d -p 8082:8082 gpenieljacobpaul/docker-java-maven-app:$IMAGE_NAME"
                     //gv.deployApp()
                     sshagent(['ec2-server-key']) {
-                        sh 'ssh -o StrictHostKeyChecking=no ubuntu@13.203.97.225 
+                        sh "ssh -o StrictHostKeyChecking=no ubuntu@13.203.97.225 $dockerCmd"
                     }    
                 }   
             }
