@@ -22,7 +22,7 @@ pipeline {
                     sh 'mvn build-helper:parse-version versions:set -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.minorVersion}.\\\${parsedVersion.nextIncrementalVersion} versions:commit'
                     def matcher = readFile('pom.xml') =~ '<version>(.+)</version>'    
                     def version = matcher[0][1]
-                    env.IMAGE_NAME = "$version-$BUILD_NUMBER"
+                    env.IMAGE_NAME = "${version}-${BUILD_NUMBER}"
                 }
             }   
         }
@@ -62,10 +62,10 @@ pipeline {
             steps {
                 script {
                     echo "deploying"
-                    def dockerCmd = "docker run -d -p 8082:8082 gpenieljacobpaul/docker-java-maven-app:$IMAGE_NAME"
+                    def dockerCmd = "docker run -d -p 8082:8082 gpenieljacobpaul/docker-java-maven-app:${IMAGE_NAME}"
                     //gv.deployApp()
                     sshagent(['ec2-server-key']) {
-                        sh "ssh -o StrictHostKeyChecking=no ubuntu@13.203.97.225 $dockerCmd"
+                        sh "ssh -o StrictHostKeyChecking=no ubuntu@13.203.97.225 ${dockerCmd}"
                     }    
                 }   
             }
