@@ -62,7 +62,7 @@ pipeline {
             steps {
                 script {
                     echo "deploying"
-                    def dockerCmd = "docker run -d -p 8082:8082 gpenieljacobpaul/docker-java-maven-app:${IMAGE_NAME}"
+                    def dockerCmd = "docker run -d -p 8080:8080 gpenieljacobpaul/docker-java-maven-app:${IMAGE_NAME}"
                     //gv.deployApp()
                     sshagent(['ec2-server-key']) {
                         sh "ssh -o StrictHostKeyChecking=no ubuntu@13.203.97.225 ${dockerCmd}"
