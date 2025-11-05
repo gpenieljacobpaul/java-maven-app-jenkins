@@ -41,23 +41,6 @@ pipeline {
 
             }
         }
-        // stage ("Push pom.xml to gitbub repo") {
-        //     steps {
-        //         script {
-        //             withCredentials([usernamePassword(credentialsId: 'gitpush', passwordVariable: 'GIT_PASS', usernameVariable: 'GIT_USER')]) {
-        //                 sh 'git config user.email "jenkins@gmail.com"'
-        //                 sh 'git config user.name "jenkins"'
-        //                 sh 'git status'
-        //                 sh 'git branch'
-        //                 sh 'git config --list'
-        //                 sh "git remote set-url origin https://${GIT_USER}:${GIT_PASS}@github.com/gpenieljacobpaul/java-maven-app-jenkins.git"
-        //                 sh 'git add .'
-        //                 sh 'git commit -m "cli: version bump webooks [ci skip]"'
-        //                 sh 'git push origin HEAD:feature'
-        //             }
-        //         }
-        //     }
-        // }
         stage("deploy") {
             steps {
                 script {
@@ -75,6 +58,23 @@ pipeline {
                         sh "ssh -o  StrictHostKeyChecking=no ${ec2Instance} ${shellCmd}"
                     }    
                 }   
+            }
+        }
+        stage ("Push pom.xml to gitbub repo") {
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: 'gitpush', passwordVariable: 'GIT_PASS', usernameVariable: 'GIT_USER')]) {
+                        sh 'git config user.email "jenkins@gmail.com"'
+                        sh 'git config user.name "jenkins"'
+                        sh 'git status'
+                        sh 'git branch'
+                        sh 'git config --list'
+                        sh "git remote set-url origin https://${GIT_USER}:${GIT_PASS}@github.com/gpenieljacobpaul/java-maven-app-jenkins.git"
+                        sh 'git add .'
+                        sh 'git commit -m "ci: version bump"'
+                        sh 'git push origin HEAD:feature'
+                    }
+                }
             }
         }
     }
