@@ -66,12 +66,13 @@ pipeline {
                     //def dockerCmd = "docker run -d -p 8080:8080 gpenieljacobpaul/docker-java-maven-app:${IMAGE_NAME}"
                     //gv.deployApp()
                     def shellCmd = "bash ./server-cmds.sh ${IMAGE_NAME}"
+                    def ec2Instance = "ubuntu@3.110.114.80"
                     sshagent(['ec2-server-key']) {
-                        sh "scp server-cmds.sh ubuntu@3.110.114.80:/home/ubuntu"
+                        sh "scp server-cmds.sh ${ec2Instance}:/home/ubuntu"
                         //sh "ssh -o StrictHostKeyChecking=no ubuntu@3.110.114.80 ${dockerCmd}"
-                        sh "scp docker-compose.yaml ubuntu@3.110.114.80:/home/ubuntu"
-                        //sh "ssh -o  StrictHostKeyChecking=no ubuntu@3.110.114.80 ${shellCmd}"
-                        sh "ssh -o  StrictHostKeyChecking=no ubuntu@3.110.114.80 ${shellCmd}"
+                        sh "scp docker-compose.yaml ${ec2Instance}:/home/ubuntu"
+                        //sh "ssh -o  StrictHostKeyChecking=no ${ec2Instance} ${shellCmd}"
+                        sh "ssh -o  StrictHostKeyChecking=no ${ec2Instance} ${shellCmd}"
                     }    
                 }   
             }
