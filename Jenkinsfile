@@ -70,7 +70,6 @@ pipeline {
                         sh 'git branch'
                         sh 'git config --list'
                         sh "git remote set-url origin https://${GIT_USER}:${GIT_PASS}@github.com/gpenieljacobpaul/java-maven-app-jenkins.git"
-                        sh 'git checkout feature || git checkout -b feature origin/feature'
                         sh 'git add .'
                         sh 'git commit -m "ci: version bump"'
                         sh 'git push origin HEAD:feature'
