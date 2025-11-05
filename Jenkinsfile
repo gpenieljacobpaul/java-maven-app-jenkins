@@ -63,7 +63,7 @@ pipeline {
         stage ("Push pom.xml to gitbub repo") {
             steps {
                 script {
-                    withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'GIT_PASS', usernameVariable: 'GIT_USER')]) {
+                    withCredentials([usernamePassword(credentialsId: 'gitty', passwordVariable: 'GIT_PASS', usernameVariable: 'GIT_USER')]) {
                         sh 'git config user.email "jenkins@gmail.com"'
                         sh 'git config user.name "jenkins"'
                         sh 'git status'
