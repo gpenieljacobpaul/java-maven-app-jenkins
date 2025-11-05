@@ -67,6 +67,7 @@ pipeline {
                     //gv.deployApp()
                     def shellCmd = "bash ./server-cmds.sh"
                     sshagent(['ec2-server-key']) {
+                        sh "scp server-cmds.sh ubuntu@3.110.114.80:/home/ubuntu"
                         //sh "ssh -o StrictHostKeyChecking=no ubuntu@3.110.114.80 ${dockerCmd}"
                         sh "scp docker-compose.yaml ubuntu@3.110.114.80:/home/ubuntu"
                         //sh "ssh -o  StrictHostKeyChecking=no ubuntu@3.110.114.80 ${shellCmd}"
