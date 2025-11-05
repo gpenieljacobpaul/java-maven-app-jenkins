@@ -61,11 +61,14 @@ pipeline {
         stage("deploy") {
             steps {
                 script {
-                    echo "deploying"
-                    def dockerCmd = "docker run -d -p 8080:8080 gpenieljacobpaul/docker-java-maven-app:${IMAGE_NAME}"
+                    echo "deploying to ec2 server using docker compose"
+                    def dockerComposeCmd = "docker-compose -f docker-compose.yaml up"
+                    //def dockerCmd = "docker run -d -p 8080:8080 gpenieljacobpaul/docker-java-maven-app:${IMAGE_NAME}"
                     //gv.deployApp()
                     sshagent(['ec2-server-key']) {
-                        sh "ssh -o StrictHostKeyChecking=no ubuntu@3.110.114.80 ${dockerCmd}"
+                        //sh "ssh -o StrictHostKeyChecking=no ubuntu@3.110.114.80 ${dockerCmd}"
+                        sh "scp docker-compose.yaml ubuntu@3.110.114.80:/home/ubuntu"
+                        sh "ssh -o  StrictHostKeyChecking=no ubuntu@3.110.114.80 ${dockerComposeCmd}"
                     }    
                 }   
             }
