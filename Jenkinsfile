@@ -65,10 +65,12 @@ pipeline {
                     def dockerComposeCmd = "docker-compose -f docker-compose.yaml up"
                     //def dockerCmd = "docker run -d -p 8080:8080 gpenieljacobpaul/docker-java-maven-app:${IMAGE_NAME}"
                     //gv.deployApp()
+                    def shellCmd = "bash ./server-cmds.sh"
                     sshagent(['ec2-server-key']) {
                         //sh "ssh -o StrictHostKeyChecking=no ubuntu@3.110.114.80 ${dockerCmd}"
                         sh "scp docker-compose.yaml ubuntu@3.110.114.80:/home/ubuntu"
-                        sh "ssh -o  StrictHostKeyChecking=no ubuntu@3.110.114.80 ${dockerComposeCmd}"
+                        //sh "ssh -o  StrictHostKeyChecking=no ubuntu@3.110.114.80 ${shellCmd}"
+                        sh "ssh -o  StrictHostKeyChecking=no ubuntu@3.110.114.80 ${shellCmd}"
                     }    
                 }   
             }
